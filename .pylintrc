@@ -1,0 +1,4 @@
+[Basic]
+disable=all
+enable=function-redefined,import-self,redefined-outer-name,reimported,return-in-init,undefined-all-variable,undefined-variable,unreachable,unused-import,unused-variable
+reports=no

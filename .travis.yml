@@ -1,0 +1,24 @@
+dist: trusty
+sudo: required
+addons:
+  postgresql: "9.4"
+env:
+  - PYTHONDONTWRITEBYTECODE=1
+language: python
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+install:
+  - pip install -U pip setuptools
+  - pip install coveralls
+  - pip install transifex-client
+before_script:
+  - psql -c "create database travis_ci_test;" -U postgres
+script:
+  - coverage run --source=misago setup.py test
+after_success:
+  - coveralls
+  - sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\n' > ~/.transifexrc
+  - tx push -s
